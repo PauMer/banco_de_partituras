@@ -1,10 +1,8 @@
 const mongoose = require('mongoose')
+const mongooseDelete = require('mongoose-delete')
 
 const userSchema = new mongoose.Schema(
     {
-        id:{
-            type: mongoose.Types.ObjectId
-        },
         nombre:{
             type:String
         },
@@ -25,5 +23,7 @@ const userSchema = new mongoose.Schema(
         versionKey: false
     }
 )
+
+userSchema.plugin(mongooseDelete, { overrideMethods: 'all'})
 
 module.exports = mongoose.model('users', userSchema)

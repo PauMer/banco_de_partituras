@@ -1,10 +1,8 @@
 const mongoose = require('mongoose')
+const mongooseDelete = require('mongoose-delete')
 
 const compositorSchema = new mongoose.Schema(
     {
-        id:{
-            type: mongoose.Types.ObjectId
-        },
         nombre:{
             type:String
         },
@@ -13,5 +11,7 @@ const compositorSchema = new mongoose.Schema(
         }
     }
 )
+
+compositorSchema.plugin(mongooseDelete, { overrideMethods: 'all'})
 
 module.exports = mongoose.model('compositores', compositorSchema)

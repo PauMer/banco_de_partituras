@@ -1,10 +1,8 @@
 const mongoose = require('mongoose')
+const mongooseDelete = require('mongoose-delete')
 
 const partituraSchema = new mongoose.Schema(
     {
-        id:{
-            type: mongoose.Types.ObjectId
-        },
         nombre:{
             type:String
         },
@@ -16,6 +14,9 @@ const partituraSchema = new mongoose.Schema(
         },
         periodo:{
             type: String
+        },
+        media_id:{
+            type: String
         }
     },
     {
@@ -23,5 +24,7 @@ const partituraSchema = new mongoose.Schema(
         versionKey: false
     }
 )
+
+partituraSchema.plugin(mongooseDelete, { overrideMethods: 'all'})
 
 module.exports = mongoose.model('partituras', partituraSchema)
