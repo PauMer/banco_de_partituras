@@ -1,5 +1,6 @@
 const { sequelize } = require('../../config/mysql')
 const { DataTypes } = require('sequelize')
+const Storage = require("./storage");
 
 const Partituras = sequelize.define(
     'partituras',
@@ -14,30 +15,37 @@ const Partituras = sequelize.define(
             type: DataTypes.STRING
         },
         compositor_id: {
-            type: DataTypes.INTEGER,
-            references: {
-              model: 'compositores', // Nombre del modelo de la tabla a la que hace referencia
-              key: 'id' // Nombre de la columna de la tabla a la que hace referencia
-        }},
+            type: DataTypes.INTEGER
+        },
         periodo_id: {
-            type: DataTypes.INTEGER,
-            references: {
-              model: 'periodos', // Nombre del modelo de la tabla a la que hace referencia
-              key: 'id' // Nombre de la columna de la tabla a la que hace referencia
-        }},
+            type: DataTypes.INTEGER
+        },
         instrumento: {
             type: DataTypes.STRING
         },
         storage_id: {
-            type: DataTypes.INTEGER,
-            references: {
-              model: 'storages', // Nombre del modelo de la tabla a la que hace referencia
-              key: 'id' // Nombre de la columna de la tabla a la que hace referencia
-         }}
+            type: DataTypes.INTEGER
+        }
         },
     {
         timestamps: true     
     }
 )
+
+Partituras.findAllData = function () {
+    Tracks.belongsTo(Storage, {
+      foreignKey: "media_id",
+      as: "archivo",
+    });
+    return Tracks.findAll({ include: "archivo" });
+};
+
+Partituras.findOneData = function (id) {
+    Tracks.belongsTo(Storage, {
+      foreignKey: "media_id",
+      as: "archivo",
+    });
+    return Tracks.findOne({ where: { id }, include: "archivo" });
+};
 
 module.exports = Partituras

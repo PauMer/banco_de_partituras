@@ -1,7 +1,7 @@
 const { sequelize } = require('../../config/mysql')
 const { DataTypes } = require('sequelize')
 
-const Periodo = sequelize.define(
+const Periodos = sequelize.define(
     'periodos',
     {
         id: {
@@ -19,4 +19,4 @@ const Periodo = sequelize.define(
     }
 )
 
-module.exports = Periodo
+module.exports = Periodos

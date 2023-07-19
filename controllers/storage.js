@@ -1,6 +1,8 @@
 const { matchedData } = require("express-validator")
 const { storageModel } = require("../models")
 const { handleHttpError } = require("../utils/handleError")
+const getProperties = require('../utils/handlePropertiesEngine')
+const propertiesKey = getProperties()
 
 const PUBLIC_URL = process.env.PUBLIC_URL
 const MEDIA_PATH = `${__dirname}/../storage`
@@ -10,15 +12,19 @@ const getItems = async (req, res) => {
     const data = await storageModel.find({})
     res.send({ data })
   } catch (e) {
+    console.log(e)
     handleHttpError(res, "ERROR_LIST_ITEMS")
   }
 }
 
 const getItem = async (req, res) => {
   try {
-    const { id } = matchedData(req)
-    const data = await storageModel.findById(id)
-    res.send({ data })
+    req = matchedData(req)
+    const query = {
+        [propertiesKey.id]:req[propertiesKey.id]
+      }
+    const data = await storageModel.findOne(query) 
+    res.send({data})
   } catch (e) {
     console.log(e)
     handleHttpError(res, "ERROR_DETAIL_ITEMS")

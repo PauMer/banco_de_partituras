@@ -1,7 +1,7 @@
 const { sequelize } = require('../../config/mysql')
 const { DataTypes } = require('sequelize')
 
-const Compositor = sequelize.define(
+const Compositores = sequelize.define(
     'compositores',
     {
         id: {
@@ -19,4 +19,4 @@ const Compositor = sequelize.define(
     }
 )
 
-module.exports = Compositor
+module.exports = Compositores

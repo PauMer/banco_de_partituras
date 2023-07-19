@@ -3,7 +3,6 @@ const validateResults = require('../utils/handleValidator')
 
 const validatorCreateItem = [
     check('nombre').exists().notEmpty(),
-    check('periodo').exists().notEmpty(),
     (req, res, next) => {
         return validateResults(req, res, next)
     }
@@ -12,8 +11,7 @@ const validatorCreateItem = [
 const validatorGetItem = [
     check('id')
     .exists()
-    .notEmpty()
-    .isMongoId(),
+    .notEmpty(),
     (req, res, next) => {
         return validateResults(req, res, next)
     }

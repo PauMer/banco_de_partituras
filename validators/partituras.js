@@ -3,9 +3,10 @@ const validateResults = require('../utils/handleValidator')
 
 const validatorCreateItem = [
     check('nombre').exists().notEmpty(),
-    check('compositor').exists().notEmpty(),
-    check('periodo').exists().notEmpty(),
+    check('compositor_id').exists().notEmpty(),
+    check('periodo_id').exists().notEmpty(),
     check('instrumento').exists().notEmpty(),
+    check('storage_id').exists().notEmpty(),
     (req, res, next) => {
         return validateResults(req, res, next)
     }
@@ -14,8 +15,7 @@ const validatorCreateItem = [
 const validatorGetItem = [
     check('id')
     .exists()
-    .notEmpty()
-    .isMongoId(),
+    .notEmpty(),
     (req, res, next) => {
         return validateResults(req, res, next)
     }

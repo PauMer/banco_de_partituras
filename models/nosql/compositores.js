@@ -5,10 +5,11 @@ const compositorSchema = new mongoose.Schema(
     {
         nombre:{
             type:String
-        },
-        periodo:{
-            type: String
         }
+    },
+    {
+        timestamps: true,
+        versionKey: false     
     }
 )
 

@@ -1,6 +1,8 @@
 const { matchedData } = require('express-validator')
 const { periodoModel } = require('../models')
 const { handleHttpError } = require('../utils/handleError')
+const getProperties = require('../utils/handlePropertiesEngine')
+const propertiesKey = getProperties()
 
 const getItems = async (req, res) => {
     try {
@@ -13,8 +15,10 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
     try {
         req = matchedData(req)
-        const { id } = req
-        const data = await periodoModel.findById(id) 
+        const query = {
+            [propertiesKey.id]:req[propertiesKey.id]
+          }
+        const data = await periodoModel.findOne(query) 
         res.send({data})
     } catch (e) {
         handleHttpError(res, 'ERROR_en_getItem')

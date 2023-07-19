@@ -4,18 +4,19 @@ const { handleHttpError } = require('../utils/handleError')
 
 const getItems = async (req, res) => {
     try {
-        const data = await partituraModel.find({}) 
+        const data = await partituraModel.find({})
         res.send({data})
     } catch (e) {
-        handleHttpError(res, 'Error_en_getIrems')
+        console.log(e)
+        handleHttpError(res, 'Error_en_getItems')
     }
 }
 const getItem = async (req, res) => {
     try {
-        req = matchedData(req)
-        const { id } = req
-        const data = await partituraModel.findById(id) 
-        res.send({data})
+        req = matchedData(req);
+        const {id} = req;
+        const data = await partituraModel.findOne(id);
+        res.send({ data });
     } catch (e) {
         handleHttpError(res, 'ERROR_en_getItem')
     }

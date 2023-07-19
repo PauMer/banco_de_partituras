@@ -1,22 +1,28 @@
 const { matchedData } = require('express-validator')
 const { userModel } = require('../models')
 const { handleHttpError } = require('../utils/handleError')
+const getProperties = require('../utils/handlePropertiesEngine')
+const propertiesKey = getProperties()
 
 const getItems = async (req, res) => {
     try {
-        const data = await userModel.find({}) 
+        const data = await userModel.findAll({}) 
         res.send({data})
     } catch (e) {
-        handleHttpError(res, 'Error_en_getIrems')
+        console.log(e)
+        handleHttpError(res, 'Error_en_getItems')
     }
 }
 const getItem = async (req, res) => {
     try {
         req = matchedData(req)
-        const { id } = req
-        const data = await userModel.findById(id) 
+        const query = {
+            [propertiesKey.id]:req[propertiesKey.id]
+          }
+        const data = await userModel.findOne(query) 
         res.send({data})
     } catch (e) {
+        console.log(e)
         handleHttpError(res, 'ERROR_en_getItem')
     }
 }
@@ -33,8 +39,11 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
     try {
         const {id, ...body} = matchedData(req)
+        const query = {
+            [propertiesKey.id]:req[propertiesKey.id]
+          }
         const data = await userModel.findOneAndUpdate(
-            { _id: id },
+            query,
             body,
             { new: true } 
         )

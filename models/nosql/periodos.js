@@ -6,9 +6,13 @@ const periodoSchema = new mongoose.Schema(
         nombre:{
             type:String
         }
+    },
+    {
+        timestamps: true,
+        versionKey: false
     }
 )
 
 periodoSchema.plugin(mongooseDelete, { overrideMethods: 'all'})
 
-module.exports = mongoose.model('periodo', periodoSchema)
+module.exports = mongoose.model('periodos', periodoSchema)

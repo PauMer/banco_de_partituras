@@ -17,6 +17,7 @@ const register = async (req, res) => {
         } 
         res.send({data})
     } catch(e) {
+        console.timeLog(e)
         handleHttpError(res, 'Error de registro')
     }
 }
