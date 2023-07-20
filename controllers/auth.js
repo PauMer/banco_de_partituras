@@ -6,20 +6,21 @@ const { userModel } = require('../models')
 
 const register = async (req, res) => {
     try{
-        req = matchedData(req)
-        const passwordHash = await encrypt(req.password)
-        const body = {...req, password: passwordHash}
-        const dataUser = await userModel.create(body)
-    
+        req = matchedData(req);
+        const password = await encrypt(req.password);
+        const body = { ...req, password };
+        const dataUser = await userModel.create(body);
+        dataUser.set("password", undefined, { strict: false });
         const data = {
-            token: await tokenSign(dataUser),
-            user: dataUser
-        } 
-        res.send({data})
-    } catch(e) {
-        console.timeLog(e)
-        handleHttpError(res, 'Error de registro')
-    }
+          token: await tokenSign(dataUser),
+          user: dataUser,
+        };
+        res.status(201)
+        res.send({ data });
+      }catch(e){
+        console.log(e)
+        handleHttpError(res, "ERROR_REGISTER_USER")
+      }
 }
 
 const login = async (req, res) => {
@@ -44,6 +45,7 @@ const login = async (req, res) => {
         }
         res.send({data})
     } catch(e) {
+        console.log(e)
         handleHttpError(res, 'Error en el login')
     }
 }

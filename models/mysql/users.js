@@ -21,12 +21,22 @@ const User = sequelize.define(
         },
         role: {
             type: DataTypes.ENUM(['user', 'admin']),
-            defaultValue: 'admin'
+            defaultValue: 'user'
         }
     },
     {
         timestamps: true     
     }
 )
+
+User.findOneAndUpdate = async function (id, body, estado) {
+    const user = await this.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({ error: 'Partitura no encontrada.' });
+    }
+
+    return await user.update(body);
+}
 
 module.exports = User

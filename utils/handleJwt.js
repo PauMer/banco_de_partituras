@@ -4,7 +4,7 @@ const getProperties = require('./handlePropertiesEngine')
 const propertiesKey = getProperties()
 
 const tokenSign = async (user) => {
-    const sign = jwt.sign({
+    const sign = await jwt.sign({
         [propertiesKey.id]: user[propertiesKey.id],
         role: user.role 
     },

@@ -6,21 +6,20 @@ const propertiesKey = getProperties()
 
 const getItems = async (req, res) => {
     try {
-        const data = await compositorModel.find({}) 
+        const data = await compositorModel.findAll({}) 
         res.send({data})
     } catch (e) {
-        handleHttpError(res, 'Error_en_getIrems')
+        handleHttpError(res, 'Error_en_getItems')
     }
 }
 const getItem = async (req, res) => {
     try {
         req = matchedData(req)
-        const query = {
-            [propertiesKey.id]:req[propertiesKey.id]
-          }
-        const data = await compositorModel.findOne(query) 
+        const { id } = req
+        const data = await compositorModel.findOneData(id) 
         res.send({data})
     } catch (e) {
+        console.log(e)
         handleHttpError(res, 'ERROR_en_getItem')
     }
 }

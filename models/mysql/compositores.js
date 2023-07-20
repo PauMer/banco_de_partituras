@@ -19,4 +19,8 @@ const Compositores = sequelize.define(
     }
 )
 
+Compositores.findOneData = function (id) {
+    return Compositores.findOne({ where: { id }})
+}
+
 module.exports = Compositores

@@ -6,7 +6,7 @@ const propertiesKey = getProperties()
 
 const getItems = async (req, res) => {
     try {
-        const data = await periodoModel.find({}) 
+        const data = await periodoModel.findAll({}) 
         res.send({data})
     } catch (e) {
         handleHttpError(res, 'Error_en_getIrems')

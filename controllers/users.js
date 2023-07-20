@@ -16,10 +16,8 @@ const getItems = async (req, res) => {
 const getItem = async (req, res) => {
     try {
         req = matchedData(req)
-        const query = {
-            [propertiesKey.id]:req[propertiesKey.id]
-          }
-        const data = await userModel.findOne(query) 
+        const { id } = req 
+        const data = await userModel.findOne({where: {id}}) 
         res.send({data})
     } catch (e) {
         console.log(e)
@@ -39,11 +37,8 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
     try {
         const {id, ...body} = matchedData(req)
-        const query = {
-            [propertiesKey.id]:req[propertiesKey.id]
-          }
         const data = await userModel.findOneAndUpdate(
-            query,
+            id,
             body,
             { new: true } 
         )
@@ -58,8 +53,8 @@ const deleteItem = async (req, res) => {
     try {
         req = matchedData(req)
         const { id } = req
-        const data = await userModel.delete({ _id: id })
-        res.send({data})
+        const data = await userModel.destroy({ where: { id } })
+        res.send('Usuario eliminado exitosamente')
     } catch (e) {
         handleHttpError(res, 'ERROR_en_deleteItem')
     }

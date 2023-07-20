@@ -9,7 +9,7 @@ const MEDIA_PATH = `${__dirname}/../storage`
 
 const getItems = async (req, res) => {
   try {
-    const data = await storageModel.find({})
+    const data = await storageModel.findAll({})
     res.send({ data })
   } catch (e) {
     console.log(e)

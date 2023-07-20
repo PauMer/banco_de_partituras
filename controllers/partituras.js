@@ -4,7 +4,7 @@ const { handleHttpError } = require('../utils/handleError')
 
 const getItems = async (req, res) => {
     try {
-        const data = await partituraModel.find({})
+        const data = await partituraModel.findAllData({})
         res.send({data})
     } catch (e) {
         console.log(e)
@@ -15,7 +15,7 @@ const getItem = async (req, res) => {
     try {
         req = matchedData(req);
         const {id} = req;
-        const data = await partituraModel.findOne(id);
+        const data = await partituraModel.findOneData(id);
         res.send({ data });
     } catch (e) {
         handleHttpError(res, 'ERROR_en_getItem')
@@ -34,11 +34,7 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
     try {
         const {id, ...body} = matchedData(req)
-        const data = await partituraModel.findOneAndUpdate(
-            { _id: id },
-            body,
-            { new: true } 
-        )
+        const data = await partituraModel.findOneAndUpdate( id, body )
         res.send({data})
     } catch (e) {
         console.log(e)
@@ -50,9 +46,10 @@ const deleteItem = async (req, res) => {
     try {
         req = matchedData(req)
         const { id } = req
-        const data = await partituraModel.delete({ _id: id })
+        const data = await partituraModel.destroy({where: { id }})
         res.send({data})
     } catch (e) {
+        console.log(e)
         handleHttpError(res, 'ERROR_en_deleteItem')
     }
 }
