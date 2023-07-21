@@ -33,7 +33,7 @@ User.findOneAndUpdate = async function (id, body, estado) {
     const user = await this.findByPk(id);
 
     if (!user) {
-      return res.status(404).json({ error: 'Partitura no encontrada.' });
+      return res.status(404).json({ error: 'Usuario no encontrado.' });
     }
 
     return await user.update(body);

@@ -37,7 +37,7 @@ const updateItem = async (req, res) => {
     try {
         const {id, ...body} = matchedData(req)
         const data = await compositorModel.findOneAndUpdate(
-            { _id: id },
+            id,
             body,
             { new: true } 
         )
@@ -52,8 +52,10 @@ const deleteItem = async (req, res) => {
     try {
         req = matchedData(req)
         const { id } = req
-        const data = await compositorModel.delete({ _id: id })
-        res.send({data})
+        const compositor = await compositorModel.findOne({where: {id}})
+        const { nombre } = compositor
+        await compositorModel.destroy({ where: { id } })
+        res.send(`El compositor ${nombre} ha sido eliminado`)
     } catch (e) {
         handleHttpError(res, 'ERROR_en_deleteItem')
     }

@@ -19,4 +19,14 @@ const Periodos = sequelize.define(
     }
 )
 
+Periodos.findOneAndUpdate = async function (id, body, estado) {
+    const periodo = await this.findByPk(id);
+
+    if (!periodo) {
+      return res.status(404).json({ error: 'Periodo no encontrado.' });
+    }
+
+    return await periodo.update(body);
+}
+
 module.exports = Periodos

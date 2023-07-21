@@ -53,7 +53,7 @@ const deleteItem = async (req, res) => {
     try {
         req = matchedData(req)
         const { id } = req
-        const data = await userModel.destroy({ where: { id } })
+        await userModel.destroy({ where: { id } })
         res.send('Usuario eliminado exitosamente')
     } catch (e) {
         handleHttpError(res, 'ERROR_en_deleteItem')

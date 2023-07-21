@@ -23,4 +23,14 @@ Compositores.findOneData = function (id) {
     return Compositores.findOne({ where: { id }})
 }
 
+Compositores.findOneAndUpdate = async function (id, body, estado) {
+    const compositor = await this.findByPk(id);
+
+    if (!compositor) {
+      return res.status(404).json({ error: 'Compositor no encontrado.' });
+    }
+
+    return await compositor.update(body);
+}
+
 module.exports = Compositores

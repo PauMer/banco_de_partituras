@@ -49,8 +49,8 @@ const createItem = async (req, res) => {
 const deleteItem = async (req, res) => {
   try {
     const { id } = matchedData(req)
-    const dataFile = await storageModel.findById(id)
-    const deleteResponse = await storageModel.delete({ _id: id })
+    const dataFile = await storageModel.findByPk(id)
+    const deleteResponse = await storageModel.destroy({where: { id }})
     const { filename } = dataFile
     const filePath = `${MEDIA_PATH}/${filename}`
     const data = {
@@ -60,6 +60,7 @@ const deleteItem = async (req, res) => {
 
     res.send({ data })
   } catch (e) {
+    console.log(e)
     handleHttpError(res, "ERROR_DETAIL_ITEMS")
   }
 }
