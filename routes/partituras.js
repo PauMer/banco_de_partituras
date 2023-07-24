@@ -5,7 +5,7 @@ const checkRol = require('../middleware/rol')
 const { validatorCreateItem, validatorGetItem } = require('../validators/partituras')
 const router = express.Router()
 
-router.get('/', authMiddleware, getItems)
+router.get('/', authMiddleware, checkRol(['admin']), getItems)
 
 router.get('/:id', authMiddleware, validatorGetItem, getItem)
 

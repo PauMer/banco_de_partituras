@@ -1,17 +1,18 @@
 const express = require('express')
 const { getItems, getItem, createItem, updateItem, deleteItem } = require('../controllers/periodos')
 const { validatorCreateItem, validatorGetItem } = require('../validators/periodos')
+const authMiddleware = require('../middleware/session')
 const router = express.Router()
 
-router.get('/', getItems)
+router.get('/', authMiddleware, getItems)
 
-router.get('/:id', validatorGetItem, getItem)
+router.get('/:id', authMiddleware, validatorGetItem, getItem)
 
-router.post('/', validatorCreateItem, createItem)
+router.post('/', authMiddleware, validatorCreateItem, createItem)
 
-router.put('/:id', validatorCreateItem, validatorGetItem, updateItem)
+router.put('/:id', authMiddleware, validatorCreateItem, validatorGetItem, updateItem)
 
-router.delete('/:id', validatorGetItem, deleteItem)
+router.delete('/:id', authMiddleware, validatorGetItem, deleteItem)
 
 
 module.exports = router

@@ -1,8 +1,6 @@
 const { matchedData } = require('express-validator')
 const { userModel } = require('../models')
 const { handleHttpError } = require('../utils/handleError')
-const getProperties = require('../utils/handlePropertiesEngine')
-const propertiesKey = getProperties()
 
 const getItems = async (req, res) => {
     try {
@@ -25,15 +23,6 @@ const getItem = async (req, res) => {
     }
 }
 
-const createItem = async (req, res) => {
-    try {
-        const body = matchedData(req)
-        const data = await userModel.create(body)
-        res.send({data})
-    } catch (e) {
-        handleHttpError(res, 'Error_en_createItems')
-    }
-}
 const updateItem = async (req, res) => {
     try {
         const {id, ...body} = matchedData(req)
@@ -62,4 +51,4 @@ const deleteItem = async (req, res) => {
 
 
 
-module.exports = {getItem, getItems, createItem, updateItem, deleteItem}
+module.exports = {getItem, getItems, updateItem, deleteItem}

@@ -7,6 +7,7 @@ const { userModel } = require('../models')
 const register = async (req, res) => {
     try{
         req = matchedData(req)
+        console.log(req)
         const password = await encrypt(req.password)
         const body = { ...req, password }
         const dataUser = await userModel.create(body)

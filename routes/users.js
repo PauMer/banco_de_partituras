@@ -1,17 +1,17 @@
 const express = require('express')
-const { getItems, getItem, createItem, updateItem, deleteItem } = require('../controllers/users')
+const { getItems, getItem, updateItem, deleteItem } = require('../controllers/users')
 const { validatorCreateItem, validatorGetItem } = require('../validators/users')
+const authMiddleware = require('../middleware/session')
+const checkRol = require('../middleware/rol')
 const router = express.Router()
 
-router.get('/', getItems)
+router.get('/', authMiddleware, checkRol(['admin']), getItems)
 
-router.get('/:id', validatorGetItem, getItem)
+router.get('/:id', authMiddleware, validatorGetItem, getItem)
 
-router.post('/', validatorCreateItem, createItem)
+router.put('/:id', authMiddleware, validatorCreateItem, validatorGetItem, updateItem)
 
-router.put('/:id', validatorCreateItem, validatorGetItem, updateItem)
-
-router.delete('/:id', validatorGetItem, deleteItem)
+router.delete('/:id', authMiddleware, validatorGetItem, deleteItem)
 
 
 module.exports = router

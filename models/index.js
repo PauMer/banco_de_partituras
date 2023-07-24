@@ -10,4 +10,5 @@ const models = {
     periodoModel: require(`${pathModels}/periodos`)
 }
 
+
 module.exports = models
