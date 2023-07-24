@@ -34,46 +34,35 @@ const Partituras = sequelize.define(
     }
 )
 
+Partituras.belongsTo(Compositores, {
+    foreignKey: 'compositor_id',
+    as: 'compositor',
+})
+Partituras.belongsTo(Periodos, {
+    foreignKey: 'periodo_id',
+    as: 'periodo',
+})
+Partituras.belongsTo(Storage, {
+    foreignKey: 'storage_id',
+    as: 'archivo',
+})
+
 Partituras.findAllData = function () {
-    Partituras.belongsTo(Compositores, {
-        foreignKey: 'compositor_id',
-        as: 'compositor',
-    })
-    Partituras.belongsTo(Periodos, {
-        foreignKey: 'periodo_id',
-        as: 'periodo',
-    })
-    Partituras.belongsTo(Storage, {
-      foreignKey: 'storage_id',
-      as: 'archivo',
-    })
-    return Partituras.findAll({ include:  ['compositor', 'periodo', 'archivo'] })
+    return Partituras.findAll({ include: ['compositor', 'periodo', 'archivo'] })
 }
 
 Partituras.findOneData = function (id) {
-    Partituras.belongsTo(Compositores, {
-        foreignKey: 'compositor_id',
-        as: 'compositor',
-    })
-    Partituras.belongsTo(Periodos, {
-        foreignKey: 'periodo_id',
-        as: 'periodo',
-    })
-    Partituras.belongsTo(Storage, {
-      foreignKey: 'storage_id',
-      as: 'archivo',
-    })
     return Partituras.findOne({ where: { id }, include: ['compositor', 'periodo', 'archivo'] })
 }
 
 Partituras.findOneAndUpdate = async function (id, body) {
-    const partitura = await this.findByPk(id);
+    const partitura = await this.findByPk(id)
 
     if (!partitura) {
-      return res.status(404).json({ error: 'Partitura no encontrada.' });
+        return res.status(404).json({ error: 'Partitura no encontrada.' })
     }
 
-    return await partitura.update(body);
+    return await partitura.update(body)
 }
 
 module.exports = Partituras

@@ -7,11 +7,11 @@ const router = express.Router()
 
 router.get('/', authMiddleware, checkRol(['admin']), getItems)
 
-router.get('/:id', authMiddleware, validatorGetItem, getItem)
+router.get('/:id', authMiddleware, checkRol(['admin']), validatorGetItem, getItem)
 
-router.put('/:id', authMiddleware, validatorCreateItem, validatorGetItem, updateItem)
+router.put('/:id', authMiddleware, checkRol(['admin']), validatorCreateItem, validatorGetItem, updateItem)
 
-router.delete('/:id', authMiddleware, validatorGetItem, deleteItem)
+router.delete('/:id', authMiddleware, checkRol(['admin']), validatorGetItem, deleteItem)
 
 
 module.exports = router

@@ -6,7 +6,7 @@ const checkRol = (roles) => (req, res, next) => {
         const checkValueRol = roles.some((rolSingle) => rolesByUser.includes(rolSingle))
 
         if(!checkValueRol){
-            handleHttpError(res, 'ERROR_NOT_PERMISSIONS', 403)
+            handleHttpError(res, 'No tiene los privilegios necesarios para realizar la operación', 403)
             return
         }
         next()
