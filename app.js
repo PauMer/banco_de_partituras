@@ -11,11 +11,12 @@ app.use(express.static('storage'))
 
 const port = process.env.PORT || 3000 
 const ENGINE_DB = process.env.ENGINE_DB
+const host = process.env.MYSQL_HOST
 
 app.use('/api', require('./routes'))
 
-app.listen(port, () => {
-    console.log('tu app está lista por http://localhost:' + port)
+app.listen(port, host, () => {
+    console.log(`Tu aplicación está escuchando en http://${host}:${port}`)
 })
 
 const conexión = () => {
